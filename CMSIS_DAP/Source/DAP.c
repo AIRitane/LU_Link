@@ -1635,6 +1635,12 @@ uint32_t DAP_ProcessCommand(const uint8_t *request, uint8_t *response) {
       num = DAP_Connect(request, response);
       break;
     case ID_DAP_Disconnect:
+			//»Ìº˛÷ÿ∆Ù
+//			if(DAP_Data.debug_port == DAP_PORT_SWD)
+//			{
+//				swd_init_debug();
+//				swd_set_target_reset(0);
+//			}
       num = DAP_Disconnect(response);
       break;
 

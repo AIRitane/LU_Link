@@ -23,7 +23,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "DAP_config.h"
+#include "DAP.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -55,7 +56,7 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+extern __NO_RETURN void DAP_Thread(void *argument);
 /* USER CODE END 0 */
 
 /**
@@ -81,12 +82,20 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
+	MX_GPIO_Init();
+	CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
+	
+	DWT->CYCCNT = 0;
+	DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
+	
+	DAP_Setup();
+	MX_USB_DEVICE_Init();
+	DAP_Thread(NULL);
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
-  MX_GPIO_Init();
-  MX_USB_DEVICE_Init();
+  
+  
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */

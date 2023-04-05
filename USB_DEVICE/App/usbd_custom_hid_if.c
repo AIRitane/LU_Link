@@ -91,9 +91,29 @@
 __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc_FS[USBD_CUSTOM_HID_REPORT_DESC_SIZE] __ALIGN_END =
 {
   /* USER CODE BEGIN 0 */
-  0x00,
+  0x06,0x00,0xFF,         /*  Usage Page (vendor defined) ($FF00) global */
+  0x09,0x01,              /*  Usage (vendor defined) ($01) local */
+  0xA1,0x01,              /*  Collection (Application) */
+  0x15,0x00,              /*   LOGICAL_MINIMUM (0) */
+  0x25,0xFF,              /*   LOGICAL_MAXIMUM (255) */
+  0x75,0x08,              /*   REPORT_SIZE (8bit) */
+ 
+  // Input Report
+  0x95,64,                /*   Report Length (64 REPORT_SIZE) */
+  0x09,0x01,              /*   USAGE (Vendor Usage 1) */
+  0x81,0x02,              /*   Input(data,var,absolute) */
+ 
+  // Output Report
+  0x95,64,                /*   Report Length (64 REPORT_SIZE) */
+  0x09,0x01,              /*   USAGE (Vendor Usage 1) */
+  0x91,0x02,              /*   Output(data,var,absolute) */
+ 
+  // Feature Report
+  0x95,64,                /*   Report Length (64 REPORT_SIZE) */
+  0x09,0x01,              /*   USAGE (Vendor Usage 1) */
+  0xB1,0x02,              /*   Feature(data,var,absolute) */
   /* USER CODE END 0 */
-  0xC0    /*     END_COLLECTION	             */
+  0xC0                    /*  END_COLLECTION	             */
 };
 
 /* USER CODE BEGIN PRIVATE_VARIABLES */
@@ -111,7 +131,10 @@ __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc_FS[USBD_CUSTOM_HID_REPORT_DES
 extern USBD_HandleTypeDef hUsbDeviceFS;
 
 /* USER CODE BEGIN EXPORTED_VARIABLES */
-
+extern void USBD_HID0_OutEvent_Fs(void);
+extern void USBD_HID0_InEvent_Fs(void);
+extern void USBD_HID0_Initialize(void);
+extern void USBD_HID0_Uninitialize(void);
 /* USER CODE END EXPORTED_VARIABLES */
 /**
   * @}
@@ -125,7 +148,7 @@ extern USBD_HandleTypeDef hUsbDeviceFS;
 static int8_t CUSTOM_HID_Init_FS(void);
 static int8_t CUSTOM_HID_DeInit_FS(void);
 static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state);
-
+static int8_t CUSTOM_HID_InEvent_FS(uint8_t event_idx, uint8_t state);
 /**
   * @}
   */
@@ -135,7 +158,8 @@ USBD_CUSTOM_HID_ItfTypeDef USBD_CustomHID_fops_FS =
   CUSTOM_HID_ReportDesc_FS,
   CUSTOM_HID_Init_FS,
   CUSTOM_HID_DeInit_FS,
-  CUSTOM_HID_OutEvent_FS
+  CUSTOM_HID_OutEvent_FS,
+	CUSTOM_HID_InEvent_FS,
 };
 
 /** @defgroup USBD_CUSTOM_HID_Private_Functions USBD_CUSTOM_HID_Private_Functions
@@ -152,6 +176,7 @@ USBD_CUSTOM_HID_ItfTypeDef USBD_CustomHID_fops_FS =
 static int8_t CUSTOM_HID_Init_FS(void)
 {
   /* USER CODE BEGIN 4 */
+	USBD_HID0_Initialize();
   return (USBD_OK);
   /* USER CODE END 4 */
 }
@@ -163,6 +188,7 @@ static int8_t CUSTOM_HID_Init_FS(void)
 static int8_t CUSTOM_HID_DeInit_FS(void)
 {
   /* USER CODE BEGIN 5 */
+	USBD_HID0_Uninitialize();
   return (USBD_OK);
   /* USER CODE END 5 */
 }
@@ -176,6 +202,7 @@ static int8_t CUSTOM_HID_DeInit_FS(void)
 static int8_t CUSTOM_HID_OutEvent_FS(uint8_t event_idx, uint8_t state)
 {
   /* USER CODE BEGIN 6 */
+	USBD_HID0_OutEvent_Fs();
   return (USBD_OK);
   /* USER CODE END 6 */
 }
@@ -193,10 +220,24 @@ static int8_t USBD_CUSTOM_HID_SendReport_FS(uint8_t *report, uint16_t len)
   return USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, report, len);
 }
 */
+
+static int8_t CUSTOM_HID_InEvent_FS(uint8_t event_idx, uint8_t state)
+{
+  /* USER CODE BEGIN 6 */
+	USBD_HID0_InEvent_Fs();
+  return (USBD_OK);
+  /* USER CODE END 6 */
+}
+
 /* USER CODE END 7 */
 
 /* USER CODE BEGIN PRIVATE_FUNCTIONS_IMPLEMENTATION */
-
+void USBD_HID_GetReportTrigger(int a,int b,void *report,int len)
+{
+	(void)a;
+	(void)b;
+	USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS,report,len);
+}
 /* USER CODE END PRIVATE_FUNCTIONS_IMPLEMENTATION */
 /**
   * @}

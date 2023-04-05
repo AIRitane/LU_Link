@@ -57,14 +57,14 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define LED_Pin GPIO_PIN_13
-#define LED_GPIO_Port GPIOC
+#define LED_Pin GPIO_PIN_12
+#define LED_GPIO_Port GPIOB
 #define JTAG_TDO_Pin GPIO_PIN_6
 #define JTAG_TDO_GPIO_Port GPIOA
 #define JTAG_TDI_Pin GPIO_PIN_7
 #define JTAG_TDI_GPIO_Port GPIOA
-#define JATG_nRESET_Pin GPIO_PIN_0
-#define JATG_nRESET_GPIO_Port GPIOB
+#define JTAG_nRESET_Pin GPIO_PIN_0
+#define JTAG_nRESET_GPIO_Port GPIOB
 #define JTAG_nTRST_Pin GPIO_PIN_1
 #define JTAG_nTRST_GPIO_Port GPIOB
 #define JTAG_TCK_Pin GPIO_PIN_13

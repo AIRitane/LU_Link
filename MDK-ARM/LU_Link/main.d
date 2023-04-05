@@ -35,3 +35,5 @@ lu_link\main.o: A:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 lu_link\main.o: A:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 lu_link\main.o: A:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 lu_link\main.o: ../Core/Inc/gpio.h
+lu_link\main.o: ../CMSIS_DAP/DAP_config.h
+lu_link\main.o: ../CMSIS_DAP/Include/DAP.h

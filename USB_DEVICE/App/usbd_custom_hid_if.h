@@ -104,7 +104,7 @@ extern USBD_CUSTOM_HID_ItfTypeDef USBD_CustomHID_fops_FS;
   */
 
 /* USER CODE BEGIN EXPORTED_FUNCTIONS */
-
+void USBD_HID_GetReportTrigger(int a,int b,void *report,int len);
 /* USER CODE END EXPORTED_FUNCTIONS */
 
 /**

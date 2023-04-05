@@ -57,7 +57,7 @@ void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(JTAG_TDI_GPIO_Port, JTAG_TDI_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, JATG_nRESET_Pin|JTAG_nTRST_Pin|JTAG_TCK_Pin|JTAG_TMS_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOB, JTAG_nRESET_Pin|JTAG_nTRST_Pin|JTAG_TCK_Pin|JTAG_TMS_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin : PtPin */
   GPIO_InitStruct.Pin = LED_Pin;
@@ -80,7 +80,7 @@ void MX_GPIO_Init(void)
   HAL_GPIO_Init(JTAG_TDI_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PBPin PBPin */
-  GPIO_InitStruct.Pin = JATG_nRESET_Pin|JTAG_TMS_Pin;
+  GPIO_InitStruct.Pin = JTAG_nRESET_Pin|JTAG_TMS_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
